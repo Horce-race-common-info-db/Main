@@ -1,0 +1,38 @@
+version: "3"
+services:
+  db:
+    build:
+      context: ./db/
+      dockerfile: Dockerfile
+    volumes:
+      - db-store:/var/lib/mysql
+      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    platform: linux/amd64
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+
+  batch:
+    build:
+      context: ./batch/
+      dockerfile: Dockerfile
+    volumes:
+      - ./batch/app/:/app
+    environment:
+      - JRDB_USER=${JRDB_USER}
+      - JRDB_PASSWORD=${JRDB_PASSWORD}
+      - INPUT_DIRECTORY=${INPUT_DIRECTORY}
+      - DOWNLOAD_FILE_OUTPUT_DIRECTORY=${DOWNLOAD_FILE_OUTPUT_DIRECTORY}
+      - CONVERT_FILE_OUTPUT_DIRECTORY=${CONVERT_FILE_OUTPUT_DIRECTORY}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+
+volumes:
+  db-store:

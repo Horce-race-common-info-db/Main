@@ -1,0 +1,4 @@
+db
+batch
+*.DS_Store
+.env
