@@ -15,6 +15,8 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE}
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    networks:
+      - horse_race_common_info_network
 
   batch:
     build:
@@ -36,3 +38,7 @@ services:
 
 volumes:
   db-store:
+
+networks:
+  horse_race_common_info_network:
+    external: true
