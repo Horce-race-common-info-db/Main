@@ -16,7 +16,8 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     networks:
-      - horse_race_common_info_network
+      default:
+      horse_race_common_info_network:
 
   batch:
     build:
